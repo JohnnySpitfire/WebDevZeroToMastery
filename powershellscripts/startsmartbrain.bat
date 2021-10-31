@@ -33,6 +33,7 @@ for /f "skip=3 tokens=2 delims= " %%a in ('tasklist /fi "imagename eq cmd.exe"')
 TIMEOUT/t 3
 start cmd /k powershell.exe -ExecutionPolicy Unrestricted -Command ". 'C:\Users\benan\Documents\GitHub\WebDevZeroToMastery\powershellscripts\StartServer.ps1'"
 start cmd /k powershell.exe -ExecutionPolicy Unrestricted -Command ". 'C:\Users\benan\Documents\GitHub\WebDevZeroToMastery\powershellscripts\StartFrontEnd.ps1'"
+start cmd /k
 echo Server Restarting ! :D
 TIMEOUT /t 1
 GOTO MENU
@@ -54,6 +55,7 @@ GOTO MENU
 :STARTSERVER
 start cmd /k powershell.exe -ExecutionPolicy Unrestricted -Command ". 'C:\Users\benan\Documents\GitHub\WebDevZeroToMastery\powershellscripts\StartServer.ps1'"
 start cmd /k powershell.exe -ExecutionPolicy Unrestricted -Command ". 'C:\Users\benan\Documents\GitHub\WebDevZeroToMastery\powershellscripts\StartFrontEnd.ps1'"
+start cmd /k
 echo Server Starting ! :D
 TIMEOUT /t 1
 GOTO MENU
@@ -61,5 +63,15 @@ GOTO MENU
 :RETRIVEDATABASE
 start cmd /k powershell.exe -ExecutionPolicy Unrestricted -Command ". 'C:\Users\benan\Documents\GitHub\WebDevZeroToMastery\powershellscripts\RetrieveDatabase.ps1'"
 GOTO MENU
+
+:EXIT
+call getCmdPID
+set "current_pid=%errorlevel%"
+
+for /f "skip=3 tokens=2 delims= " %%a in ('tasklist /fi "imagename eq cmd.exe"') do (
+    if "%%a" neq "%current_pid%" (
+        TASKKILL /PID %%a /f /T >nul 2>nul
+    )
+)
 
 
