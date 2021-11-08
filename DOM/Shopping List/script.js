@@ -35,7 +35,7 @@ button.addEventListener("click", addListAfterClick);
 
 input.addEventListener("keypress", addListAfterKeypress);
 
-for(var i = 0; i < li.length; i++){
+for (var i = 0; i < li.length; i++){
 	console.log(i);
 	li[i].addEventListener("click", lineThroughList);
 }
